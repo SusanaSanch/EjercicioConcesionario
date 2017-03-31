@@ -14,7 +14,9 @@ import javax.swing.JOptionPane;
  * @author alumno2
  */
 public class Menu {
-    
+    /**
+     * muestra el menú
+     */
     public static void showMenu(){
         
         System.out.println("Seleccione una opción:\n");
@@ -25,6 +27,10 @@ public class Menu {
         System.out.println("0 - Salir");
     }
     
+    /**
+     * Recoge la opción elegida
+     * @return número de opción
+     */
     public static int recogerRespuesta()
     {
         int respuesta = 0;
@@ -40,21 +46,46 @@ public class Menu {
         System.out.println("Programa finalizado");
     }
     
-    public static void crearNuevoCoche(List<Coche> listaCoches, int id)
+    public static void crearNuevoVehiculo(List<Vehiculo> listaVehiculos, int id)
     {
-        Coche coche = new Coche();
-        boolean segundaMano = false;
+        int opcionVehiculo = Integer.valueOf(JOptionPane.showInputDialog("¿Qué vehículo quiere crear?\n"
+                + "1 - Coche\n"
+                + "2 - Camión"));
+        if(opcionVehiculo == 1)
+        {
+            Coche coche = new Coche();
         
-        try {
-            coche.setMarca(JOptionPane.showInputDialog("Introduzca marca del vehículo:"));
-            coche.setModelo(JOptionPane.showInputDialog("Introduzca modelo del vehículo:"));
-            coche.setPrecio(Float.valueOf(JOptionPane.showInputDialog("Introduzca precio del vehículo:")));
-            coche.setKilometraje(Integer.valueOf(JOptionPane.showInputDialog("Introduzca kilometraje:")));
-            coche.setSegundaMano(preguntaSegundaMano());
-                
-        listaCoches.add(coche);
-        } catch (Exception e) {
-            System.out.println("Se ha producido un error creando el nuevo coche");
+            try {
+                coche.setId(id);
+                coche.setMarca(JOptionPane.showInputDialog("Introduzca marca del vehículo:"));
+                coche.setModelo(JOptionPane.showInputDialog("Introduzca modelo del vehículo:"));
+                coche.setPrecio(Float.valueOf(JOptionPane.showInputDialog("Introduzca precio del vehículo:")));
+                coche.setKilometraje(Integer.valueOf(JOptionPane.showInputDialog("Introduzca kilometraje:")));
+                coche.setSegundaMano(preguntaSegundaMano());
+
+            listaVehiculos.add(coche);
+            } catch (Exception e) {
+                System.out.println("Se ha producido un error creando el nuevo coche");
+            }
+        }else if(opcionVehiculo == 2)
+        {
+            Camion camion = new Camion();
+            try {
+                camion.setId(id);
+                camion.setMarca(JOptionPane.showInputDialog("Introduzca marca del vehículo:"));
+                camion.setModelo(JOptionPane.showInputDialog("Introduzca modelo del vehículo:"));
+                camion.setPrecio(Float.valueOf(JOptionPane.showInputDialog("Introduzca precio del vehículo:")));
+                camion.setCarga(Integer.valueOf(JOptionPane.showInputDialog("Introduzca la carga:")));
+                camion.setTipo(JOptionPane.showInputDialog("Introduzca tipo del vehículo:"));
+
+            listaVehiculos.add(camion);
+            } catch (Exception e) {
+                System.out.println("Se ha producido un error creando el nuevo coche");
+            }
+        }else
+        {
+            JOptionPane.showMessageDialog(null,"Valor introducido no válido");
+            crearNuevoVehiculo(listaVehiculos, id);
         }
     }
     
@@ -82,47 +113,58 @@ public class Menu {
         return segundaMano;
     }
     
-    public static void listarCoches(List<Coche> listaCoches){
+    public static void listarVehiculos(List<Vehiculo> listaVehiculos){
         
-        for (Coche coche : listaCoches) {
-            System.out.println(coche.toString());
+        for (Vehiculo vehiculo : listaVehiculos) {
+            if (vehiculo instanceof Coche)
+            {
+                System.out.println(((Coche)vehiculo).toString());
+            }
+            else
+            {
+                System.out.println(((Camion)vehiculo).toString());
+            }
         }
         
     }
     
-    public static void actualizarCoche (List<Coche> listaCoches)
+    public static void actualizarVehiculo (List<Vehiculo> listaVehiculo)
     {
         
-        System.out.println("Lista de coches: ");
-        for(int i=1;i<listaCoches.size();i++){
-            System.out.println(i+" - "+listaCoches.get(i).toString());
+        System.out.println("Elija un vehículo de la lista: ");
+        for(int i=1;i<listaVehiculo.size();i++){
+            System.out.println("opción"+i+" - "+listaVehiculo.get(i).toString());
         }
-        int id = Integer.valueOf(JOptionPane.showInputDialog("Introduzca el id del vehículo a actualizar:"));
-        Coche cocheDeseado = listaCoches.get(id);
+        int id = Integer.valueOf(JOptionPane.showInputDialog("Introduzca el vehículo a actualizar:"));
+        Vehiculo vehiculoDeseado = listaVehiculo.get(id);
        
-        cocheDeseado.setMarca(JOptionPane.showInputDialog("Introduzca marca del vehículo:", cocheDeseado.getMarca()));
-        cocheDeseado.setModelo(JOptionPane.showInputDialog("Introduzca modelo del vehículo:", cocheDeseado.getModelo()));
-        cocheDeseado.setPrecio(Float.valueOf(JOptionPane.showInputDialog("Introduzca precio del vehículo:", cocheDeseado.getPrecio())));
-        cocheDeseado.setKilometraje(Integer.valueOf(JOptionPane.showInputDialog("Introduzca kilometraje:", cocheDeseado.getKilometraje())));
-        cocheDeseado.setSegundaMano(preguntaSegundaMano());
+        vehiculoDeseado.setMarca(JOptionPane.showInputDialog("Introduzca marca del vehículo:", vehiculoDeseado.getMarca()));
+        vehiculoDeseado.setModelo(JOptionPane.showInputDialog("Introduzca modelo del vehículo:", vehiculoDeseado.getModelo()));
+        vehiculoDeseado.setPrecio(Float.valueOf(JOptionPane.showInputDialog("Introduzca precio del vehículo:", vehiculoDeseado.getPrecio())));
+        
+        if(vehiculoDeseado instanceof Coche)
+        {
+            ((Coche) vehiculoDeseado).setKilometraje(Integer.valueOf(JOptionPane.showInputDialog("Introduzca kilometraje:", ((Coche) vehiculoDeseado).getKilometraje())));
+            ((Coche) vehiculoDeseado).setSegundaMano(preguntaSegundaMano());
+        }else
+        {
+            ((Camion)vehiculoDeseado).setCarga(Integer.valueOf(JOptionPane.showInputDialog("Introduzca carga:", ((Camion)vehiculoDeseado).getCarga())));
+            ((Camion)vehiculoDeseado).setTipo(JOptionPane.showInputDialog("Introduzca tipo:", ((Camion)vehiculoDeseado).getTipo()));
+        }
                 
     }
     
-    public static void borrarCoche(List<Coche> listaCoches)
+    public static void borrarVehiculo(List<Vehiculo> listaVehiculo)
     {
+       
         try {
-        int id = Integer.valueOf(JOptionPane.showInputDialog("Introduzca el id del vehículo a borrar:"));
-        int idCoche = 0;
-        int cont = 0;
-        
-        do
-        {
-            idCoche = listaCoches.get(cont).getId();
-            cont++;
-        }while(id == idCoche);
-        
-        listaCoches.remove(cont);
-            System.out.println("El vehículo con id " + idCoche + " ha sido borrado.");
+            System.out.println("Elija un vehículo de la lista: ");
+            for(int i=1;i<listaVehiculo.size();i++){
+                System.out.println("opción"+i+" - "+listaVehiculo.get(i).toString());
+            }
+            int id = Integer.valueOf(JOptionPane.showInputDialog("Introduzca el vehículo a borrar:"));
+            listaVehiculo.remove(id);
+            System.out.println("El vehículo número " + id + " ha sido borrado.");
             
         } catch (Exception e) {
             System.out.println("Error en el borrado del vehículo");
