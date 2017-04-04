@@ -5,6 +5,7 @@
  */
 package concesionario;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
@@ -14,6 +15,7 @@ import javax.swing.JOptionPane;
  * @author alumno2
  */
 public class Menu {
+    
     /**
      * muestra el menú
      */
@@ -46,7 +48,7 @@ public class Menu {
         System.out.println("Programa finalizado");
     }
     
-    public static void crearNuevoVehiculo(List<Vehiculo> listaVehiculos, int id)
+    public static void crearNuevoVehiculo(ArrayList<Vehiculo> listaVehiculos, int id)
     {
         int opcionVehiculo = Integer.valueOf(JOptionPane.showInputDialog("¿Qué vehículo quiere crear?\n"
                 + "1 - Coche\n"
@@ -113,7 +115,7 @@ public class Menu {
         return segundaMano;
     }
     
-    public static void listarVehiculos(List<Vehiculo> listaVehiculos){
+    public static void listarVehiculos(ArrayList<Vehiculo> listaVehiculos){
         
         for (Vehiculo vehiculo : listaVehiculos) {
             if (vehiculo instanceof Coche)
@@ -125,10 +127,9 @@ public class Menu {
                 System.out.println(((Camion)vehiculo).toString());
             }
         }
-        
     }
     
-    public static void actualizarVehiculo (List<Vehiculo> listaVehiculo)
+    public static void actualizarVehiculo (ArrayList<Vehiculo> listaVehiculo)
     {
         
         System.out.println("Elija un vehículo de la lista: ");
@@ -151,10 +152,9 @@ public class Menu {
             ((Camion)vehiculoDeseado).setCarga(Integer.valueOf(JOptionPane.showInputDialog("Introduzca carga:", ((Camion)vehiculoDeseado).getCarga())));
             ((Camion)vehiculoDeseado).setTipo(JOptionPane.showInputDialog("Introduzca tipo:", ((Camion)vehiculoDeseado).getTipo()));
         }
-                
     }
     
-    public static void borrarVehiculo(List<Vehiculo> listaVehiculo)
+    public static void borrarVehiculo(ArrayList<Vehiculo> listaVehiculo)
     {
        
         try {
@@ -169,7 +169,6 @@ public class Menu {
         } catch (Exception e) {
             System.out.println("Error en el borrado del vehículo");
         }
-        
-    }
+    } 
     
 }

@@ -9,68 +9,34 @@ package concesionario;
  *
  * @author alumno2
  */
-public class Coche {
+public class Coche extends Vehiculo{
     
-    private int id;
-    private String marca;
-    private String modelo;
-    private float precio;
     private int kilometraje;
     private boolean segundaMano;
 
-    public Coche(int id, String marca, String modelo, float precio, int kilometraje, boolean segundaMano) {
-        this.id = id;
-        this.marca = marca;
-        this.modelo = modelo;
-        this.precio = precio;
+    public Coche(String marca, String modelo, float precio, int kilometraje, boolean segundaMano) {
+        super(marca, modelo, precio);
         this.kilometraje = kilometraje;
         this.segundaMano = segundaMano;
     }
     
     public Coche(){}
-
+    /*
     @Override
     public String toString() {
         return "Vehículo " + id + ": \n" + "Marca: " + marca
                 + "\nModelo: " + modelo + "\nPrecio: " + precio
-                + "\nKilometraje: " + kilometraje + "\nSegunda Mano: " 
-                + segundaMano + "\n"; //To change body of generated methods, choose Tools | Templates.
-    }
+                + "\nKilometraje: " + getKilometraje() + "\nSegunda Mano: " 
+                + isSegundaMano() + "\n"; //To change body of generated methods, choose Tools | Templates.
+    }*/
 
+    @Override
+    public String toString() {
+        return super.toString()+"\nKilometraje: " + this.getKilometraje() 
+                + "\nSegunda Mano: " + this.isSegundaMano() + "\n"; 
+    }
     
     
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
-    public float getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(float precio) {
-        this.precio = precio;
-    }
-
     public int getKilometraje() {
         return kilometraje;
     }
@@ -86,9 +52,8 @@ public class Coche {
     public void setSegundaMano(boolean segundaMano) {
         this.segundaMano = segundaMano;
     }
+
     
     
-    
-    
-    
+        
 }

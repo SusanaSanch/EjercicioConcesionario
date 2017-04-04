@@ -14,23 +14,76 @@ import java.util.List;
  */
 public class Main {
 
+    static int opcion = 0;
+    static int id = 0;
+    
+     public static void escribirFichero(ArrayList<Vehiculo> listaVehiculos)
+    {
+        Codificador codificador = new Codificador();
+        GestorFicheros gestorFicheros = new GestorFicheros("objetos.txt");
+        String coded = codificador.codificar(listaVehiculos);
+        gestorFicheros.escribirFichero(coded);
+    }
+    
+    public static void leerFichero()
+    {
+        Codificador codificador = new Codificador();
+        GestorFicheros gestorFicheros = new GestorFicheros("objetos.txt");
+        String objetosSerializados = gestorFicheros.leerFichero();
+        ArrayList<Vehiculo> objetos = codificador.descodificar(objetosSerializados);
+        
+        System.out.println("Marca\t\tModelo\t\tPrecio");
+        for (Vehiculo v : objetos) {
+            System.out.println(
+                v.getMarca()+"\t\t"+v.getModelo()+"\t\t"+v.getPrecio()
+            );
+            
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) {   
+       
+        ArrayList<Vehiculo> listaVehiculos = new ArrayList<>();
         
-        int opcion = 0;
+        //EJEMPLOS
         int id = 4;
-        List<Coche> listaCoches = new ArrayList<>();
         
-        Coche c1 = new Coche(1, "Volskwagen", "T5", 12345, 1234, true);
-        Coche c2 = new Coche(2, "Toyota", "Yaris", 6000, 25220, false);
-        Coche c3 = new Coche(3, "Seat", "Alhambra", 10000, 100000, true);
+        Coche c1 = new Coche("Volskwagen", "T5", 12345, 1234, true);
+        Coche c2 = new Coche("Toyota", "Yaris", 6000, 25220, false);
+        Coche c3 = new Coche("Seat", "Alhambra", 10000, 100000, true);
         
-        listaCoches.add(c1);
-        listaCoches.add(c2);
-        listaCoches.add(c3);
-               
+        c1.setId(1);
+        c2.setId(2);
+        c3.setId(3);
+        
+        listaVehiculos.add(c1);
+        listaVehiculos.add(c2);
+        listaVehiculos.add(c3);
+        
+        Codificador codificador = new Codificador();
+        GestorFicheros gestorFicheros = new GestorFicheros("objetos.txt");
+        
+        //prueba escritura 
+        
+        String coded = codificador.codificar(listaVehiculos);
+        gestorFicheros.escribirFichero(coded);
+        
+        //prueba lectura
+        /*
+        String objetosSerializados = gestorFicheros.leerFichero();
+        ArrayList<Vehiculo> objetos = codificador.descodificar(objetosSerializados);
+        
+        System.out.println("Marca\t\tModelo\t\tPrecio");
+        for (Vehiculo v : objetos) {
+            System.out.println(
+                v.getMarca()+"\t\t"+v.getModelo()+"\t\t"+v.getPrecio()
+            );
+        }*/
+        
+        //FIN EJEMPLOS
         
         do{
             do{
@@ -52,20 +105,24 @@ public class Main {
                     break;
 
                 case 1:
-                    Menu.crearNuevoCoche(listaCoches, id);
+                    Menu.crearNuevoVehiculo(listaVehiculos, id);
                     id ++;
+                    escribirFichero(listaVehiculos);
                     break;
 
                 case 2:
-                    Menu.listarCoches(listaCoches);
+                    Menu.listarVehiculos(listaVehiculos);
+                    leerFichero();
                     break;
 
                 case 3:
-                    Menu.actualizarCoche(listaCoches);
+                    Menu.actualizarVehiculo(listaVehiculos);
+                    escribirFichero(listaVehiculos);
                     break;
 
                 case 4:
-                    Menu.borrarCoche(listaCoches);
+                    Menu.borrarVehiculo(listaVehiculos);
+                    escribirFichero(listaVehiculos);
                     break;
             }
         }while(opcion!=0);
